@@ -9,6 +9,6 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	</http:listener-config>
 	<flow name="gitexample2Flow" doc:id="6d776ba0-d006-4b37-85d6-860c835cc670" >
 		<http:listener doc:name="Listener" doc:id="4e837620-a4bf-4647-a126-c44cdeb1b616" config-ref="HTTP_Listener_config" path="gitexample2"/>
-		<set-payload value="#['Set gitexample2']" doc:name="Set Payload" doc:id="7c9d6a4a-c223-4afc-a874-a4a7f965a341" />
+		<set-payload value="#['Set gitexample2 Story3']" doc:name="Set Payload" doc:id="7c9d6a4a-c223-4afc-a874-a4a7f965a341" />
 	</flow>
 </mule>
