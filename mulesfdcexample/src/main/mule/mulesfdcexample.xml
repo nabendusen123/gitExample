@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="70620d78-36ba-4eed-b59a-5c4a97eff133" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<salesforce:sfdc-config name="Salesforce_Config" doc:name="Salesforce Config" doc:id="0f7a7f9e-cdd1-4b64-97d0-be4fdc79440d" >
+		<salesforce:oauth-jwt-connection consumerKey="3MVG9ZF4bs_.MKugXfgvaNDcAHsGN6J6VTubzkA0l8iV27.l1AdWcB8TXvKGLNTfYlGmugHtgop1LAzsT36YM" keyStore="00D2E000001FIXk.jks" storePassword="chaiti123" principal="nabendu.jobs@gmail.com"/>
+	</salesforce:sfdc-config>
+	<flow name="mulesfdcexampleFlow" doc:id="96463f55-2919-4eb0-9e81-fe492756f0ad" >
+		<http:listener doc:name="Listener" doc:id="d83bb050-2a31-4c1a-9b09-0e7ff9d6baaa" config-ref="HTTP_Listener_config" path="/sfdcOAuth"/>
+		<salesforce:get-server-timestamp doc:name="Get server timestamp" doc:id="e0636786-27e2-4e3d-965d-9fcd2a81eeb0" config-ref="Salesforce_Config"/>
+		<ee:transform doc:name="Transform Message" doc:id="d4533f00-2132-49f2-834a-11d2c8db8a8e" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"server_timestamp": payload
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
